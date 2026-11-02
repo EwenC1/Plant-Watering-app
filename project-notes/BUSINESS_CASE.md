@@ -7,7 +7,7 @@ Your prototype shows *what* the product looks like. This document explains *why*
 - **Customer:** Who exactly is it for?
 - **Problem:** What problem do they have today, and how do they solve it now?
 - **Solution:** What does your product do differently or better?
-- **Revenue:** How does the company make money?
+- **Revenue:** Freemium subscription. The free plan supports up to five plants; Tend Plus is modeled at $3.99/month for unlimited plants, shared household care, and care history. Validate willingness to pay before treating this prototype price as a real price.
 
 ## 2. Where IT creates value
 
@@ -37,3 +37,4 @@ What would it take to run this for real? Which parts would you buy as cloud serv
 ## 6. Risks and ethics
 
 What could go wrong — for your customers, their data, or society? What would you do about it?
+For a real paid version, billing would need a secure payment provider and a server-side subscription record. This prototype does not collect payment details or process charges. Plant-care schedules should be presented as guidance, not guarantees, because watering needs vary by plant and environment.

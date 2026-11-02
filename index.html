@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>YourStartup</title>
-  <meta name="description" content="A student startup prototype for BSAD 281.">
+  <title>Tend | Plant care</title>
+  <meta name="description" content="A simple garden dashboard to keep plant watering on schedule.">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -14,70 +14,67 @@
        Each link points to a "view" further down the page (#home, #explore, #about).
        ========================================================= -->
   <header class="site-header">
-    <a class="brand" href="#home" id="brand-name">YourStartup</a>
-    <nav aria-label="Main">
-      <a href="#home">Home</a>
-      <a href="#explore">Explore</a>
-      <a href="#about">About</a>
-    </nav>
+    <a class="brand" href="#home" id="brand-name" aria-label="Tend home">
+      <span class="brand-mark" aria-hidden="true">t</span>
+      <span>Tend</span>
+    </a>
+    <div class="header-note"><span class="live-dot" aria-hidden="true"></span> Your garden, in good hands</div>
+    <button class="button upgrade-button" id="upgrade-button" type="button">Explore Plus</button>
+    <button class="button alert-button" id="notification-button" type="button">
+      <span aria-hidden="true">◉</span> <span id="notification-label">Enable reminders</span>
+    </button>
   </header>
 
   <main>
-
-    <!-- =======================================================
-         VIEW 1: HOME — what you do, for whom, and why it matters.
-         ======================================================= -->
-    <section id="home" data-view>
-      <div class="hero">
-        <p class="eyebrow">Prototype</p>
-        <h1 id="tagline">One sentence that says what your startup does.</h1>
-        <p class="lead" id="pitch">
-          Who is your customer, what problem do they have, and why is your
-          solution better than what they use today?
-        </p>
-        <a class="button" href="#explore">See it in action</a>
+    <section class="garden" aria-labelledby="page-title">
+      <div class="page-heading">
+        <div>
+          <p class="eyebrow">TODAY, <span id="today-label"></span></p>
+          <h1 id="page-title">Your garden</h1>
+          <p class="lead" id="pitch">A little care, right on time.</p>
+        </div>
+        <button class="button add-button" id="add-plant-button" type="button">
+          <span aria-hidden="true">+</span> Add a plant
+        </button>
       </div>
 
-      <div class="steps">
-        <div class="card">
-          <h2>1. Step one</h2>
-          <p>Describe the first thing a customer does.</p>
-        </div>
-        <div class="card">
-          <h2>2. Step two</h2>
-          <p>Describe what happens next.</p>
-        </div>
-        <div class="card">
-          <h2>3. Step three</h2>
-          <p>Describe the result the customer gets.</p>
-        </div>
+      <div class="summary" aria-label="Garden summary">
+        <div class="summary-item"><span class="summary-icon leaf-icon" aria-hidden="true">✳</span><span><strong id="plant-count">0</strong><small>PLANTS</small></span></div>
+        <div class="summary-item"><span class="summary-icon water-icon" aria-hidden="true">↓</span><span><strong id="due-count">0</strong><small>NEED WATER</small></span></div>
+        <div class="summary-item"><span class="summary-icon sun-icon" aria-hidden="true">☼</span><span><strong id="healthy-count">0</strong><small>ON SCHEDULE</small></span></div>
+        <p id="garden-message" class="garden-message" aria-live="polite"></p>
       </div>
-    </section>
 
-    <!-- =======================================================
-         VIEW 2: EXPLORE — a list built from the fake data in data.js.
-         ======================================================= -->
-    <section id="explore" data-view hidden>
-      <h1>Explore</h1>
-      <p class="muted">These examples are fake. They come from <code>data.js</code>.</p>
+      <aside class="premium-banner" aria-label="Tend Plus plan">
+        <div class="premium-mark" aria-hidden="true">+</div>
+        <div class="premium-copy">
+          <strong id="plan-status">Free plan · up to 5 plants</strong>
+          <span id="plan-description">Give your whole indoor jungle room to grow with Tend Plus.</span>
+        </div>
+        <button class="premium-link" id="view-plans-button" type="button">See plans <span aria-hidden="true">→</span></button>
+      </aside>
 
-      <label class="search">
-        <span>Search</span>
-        <input type="search" id="search-box" placeholder="Type to filter…">
-      </label>
+      <div class="section-heading">
+        <div>
+          <h2>All plants <span id="plant-total" class="count-badge">0</span></h2>
+          <p>Watering schedules at a glance</p>
+        </div>
+        <label class="sort-control" for="plant-sort">Sort by
+          <select id="plant-sort">
+            <option value="due">Next due</option>
+            <option value="name">Plant name</option>
+          </select>
+        </label>
+      </div>
 
-      <p class="muted" id="saved-count"></p>
-      <div class="grid" id="listing-grid"></div>
-      <p class="empty" id="empty-message" hidden>Nothing matches your search.</p>
-    </section>
-
-    <!-- =======================================================
-         VIEW 3: ABOUT — your team and your story.
-         ======================================================= -->
-    <section id="about" data-view hidden>
-      <h1>About us</h1>
-      <p>Tell the story of why your team started this company.</p>
-      <p>Use first names only, or no names at all — this site is public.</p>
+      <div class="plant-grid" id="plant-grid" aria-live="polite"></div>
+      <div class="empty-state" id="empty-state" hidden>
+        <span class="empty-illustration" aria-hidden="true">✳</span>
+        <h2>Your garden starts here</h2>
+        <p>Add your first plant and Tend will help you keep its watering rhythm.</p>
+        <button class="button" id="empty-add-button" type="button">Add your first plant</button>
+      </div>
+      <p class="reminder-note">Browser reminders appear while this page is open. Your garden is saved on this device.</p>
     </section>
 
   </main>
@@ -87,7 +84,48 @@
     <p>Student prototype for BSAD 281 at St. Francis Xavier University. Not a real company — all data is fictional.</p>
   </footer>
 
-  <!-- Scripts load in this order: data first, then the code that uses it. -->
+  <dialog id="plant-dialog" aria-labelledby="dialog-title">
+    <form id="plant-form">
+      <div class="dialog-heading">
+        <div><p class="eyebrow">A NEW LEAF</p><h2 id="dialog-title">Add a plant</h2></div>
+        <button class="icon-button" id="close-dialog-button" type="button" aria-label="Close">×</button>
+      </div>
+      <label class="form-field">Plant name<input name="name" required maxlength="60" placeholder="e.g. Monstera"></label>
+      <label class="form-field">Plant type <span class="optional">OPTIONAL</span><input name="species" maxlength="80" placeholder="e.g. Monstera deliciosa"></label>
+      <div class="form-row">
+        <label class="form-field">Water every<input name="interval" type="number" min="1" max="90" value="7" required><span class="input-suffix">days</span></label>
+        <label class="form-field">Last watered<input name="lastWatered" id="last-watered-input" type="date" required></label>
+      </div>
+      <p class="form-hint">Schedules are a starting point. Light, season, and soil can change what your plant needs.</p>
+      <div class="dialog-actions"><button class="button secondary-button" id="cancel-dialog-button" type="button">Cancel</button><button class="button" type="submit">Add to garden</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="upgrade-dialog" aria-labelledby="upgrade-title">
+    <div class="upgrade-content">
+      <div class="dialog-heading">
+        <div><p class="eyebrow">GROW AT YOUR PACE</p><h2 id="upgrade-title">Choose your garden plan</h2></div>
+        <button class="icon-button" id="close-upgrade-button" type="button" aria-label="Close plans">×</button>
+      </div>
+      <p class="upgrade-intro">Start free. Upgrade when your collection needs more room.</p>
+      <div class="plan-options">
+        <section class="plan-option">
+          <p class="plan-name">Free</p>
+          <p class="plan-price">$0 <span>forever</span></p>
+          <ul><li>Up to 5 plants</li><li>Watering schedules</li><li>Browser reminders</li></ul>
+          <span class="current-plan" id="free-plan-label">Your current plan</span>
+        </section>
+        <section class="plan-option plus-plan">
+          <p class="plan-name">Tend Plus</p>
+          <p class="plan-price">$3.99 <span>/ month</span></p>
+          <ul><li>Unlimited plants</li><li>Shared household garden</li><li>Care notes and history</li></ul>
+          <button class="button plus-activate-button" id="activate-plus-button" type="button">Try Plus demo</button>
+        </section>
+      </div>
+      <p class="demo-disclaimer">Prototype only: this demo does not collect payment details or charge you.</p>
+    </div>
+  </dialog>
+
   <script src="data.js"></script>
   <script src="app.js"></script>
 </body>
