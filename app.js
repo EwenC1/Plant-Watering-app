@@ -199,7 +199,59 @@
       rendered.sort(function (first, second) { return first.daysUntil - second.daysUntil; });
     }
     plantGrid.replaceChildren.apply(plantGrid, rendered.map(function (item) { return item.card; }));
+    renderAgenda();
     checkReminders();
+  }
+
+  function renderAgenda() {
+    const agendaList = document.getElementById("agenda-list");
+    if (plants.length === 0) {
+      const emptyMessage = document.createElement("p");
+      emptyMessage.className = "agenda-empty";
+      emptyMessage.textContent = "Add a plant to see your upcoming watering days.";
+      agendaList.replaceChildren(emptyMessage);
+      return;
+    }
+
+    const days = [];
+    for (let offset = 0; offset < 7; offset += 1) {
+      const date = new Date();
+      date.setDate(date.getDate() + offset);
+      const scheduledPlants = plants.filter(function (plant) {
+        const daysUntil = daysUntilWatered(plant);
+        return offset === 0 ? daysUntil <= 0 : daysUntil === offset;
+      });
+      const row = document.createElement("div");
+      row.className = "agenda-day" + (offset === 0 ? " is-today" : "");
+
+      const dateGroup = document.createElement("div");
+      dateGroup.className = "agenda-date-group";
+      const dayName = document.createElement("strong");
+      dayName.textContent = offset === 0
+        ? "Today"
+        : offset === 1
+          ? "Tomorrow"
+          : date.toLocaleDateString(undefined, { weekday: "short" });
+      const calendarDate = document.createElement("span");
+      calendarDate.textContent = date.toLocaleDateString(undefined, { month: "short", day: "numeric" });
+      dateGroup.append(dayName, calendarDate);
+
+      const description = document.createElement("span");
+      description.className = "agenda-plants" + (scheduledPlants.length ? " has-plants" : "");
+      description.textContent = scheduledPlants.length
+        ? scheduledPlants.map(function (plant) { return plant.name; }).join(", ")
+        : "No plants due";
+
+      const count = document.createElement("span");
+      count.className = "agenda-count" + (scheduledPlants.length && offset === 0 ? " needs-water" : "");
+      count.textContent = scheduledPlants.length
+        ? scheduledPlants.length + (scheduledPlants.length === 1 ? " plant" : " plants")
+        : "Clear";
+
+      row.append(dateGroup, description, count);
+      days.push(row);
+    }
+    agendaList.replaceChildren.apply(agendaList, days);
   }
 
   function checkReminders() {

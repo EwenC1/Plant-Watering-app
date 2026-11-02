@@ -55,24 +55,37 @@
       </aside>
 
       <div class="section-heading">
-        <div>
-          <h2>All plants <span id="plant-total" class="count-badge">0</span></h2>
-          <p>Watering schedules at a glance</p>
-        </div>
-        <label class="sort-control" for="plant-sort">Sort by
-          <select id="plant-sort">
-            <option value="due">Next due</option>
-            <option value="name">Plant name</option>
-          </select>
-        </label>
-      </div>
+      <div class="dashboard-columns">
+        <div class="plants-column">
+          <div class="section-heading">
+            <div>
+              <h2>All plants <span id="plant-total" class="count-badge">0</span></h2>
+              <p>Watering schedules at a glance</p>
+            </div>
+            <label class="sort-control" for="plant-sort">Sort by
+              <select id="plant-sort">
+                <option value="due">Next due</option>
+                <option value="name">Plant name</option>
+              </select>
+            </label>
+          </div>
 
-      <div class="plant-grid" id="plant-grid" aria-live="polite"></div>
-      <div class="empty-state" id="empty-state" hidden>
-        <span class="empty-illustration" aria-hidden="true">✳</span>
-        <h2>Your garden starts here</h2>
-        <p>Add your first plant and Tend will help you keep its watering rhythm.</p>
-        <button class="button" id="empty-add-button" type="button">Add your first plant</button>
+          <div class="plant-grid" id="plant-grid" aria-live="polite"></div>
+          <div class="empty-state" id="empty-state" hidden>
+            <span class="empty-illustration" aria-hidden="true">✳</span>
+            <h2>Your garden starts here</h2>
+            <p>Add your first plant and Tend will help you keep its watering rhythm.</p>
+            <button class="button" id="empty-add-button" type="button">Add your first plant</button>
+          </div>
+        </div>
+
+        <aside class="watering-agenda" aria-labelledby="agenda-title">
+          <div class="agenda-heading">
+            <div><p class="eyebrow">LOOKING AHEAD</p><h2 id="agenda-title">Watering this week</h2></div>
+            <span class="agenda-period">7 DAYS</span>
+          </div>
+          <div class="agenda-list" id="agenda-list" aria-live="polite"></div>
+        </aside>
       </div>
       <p class="reminder-note">Browser reminders appear while this page is open. Your garden is saved on this device.</p>
     </section>
